@@ -1,0 +1,60 @@
+@model mym.Models.ThemeSettingsViewModel
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Tema Ayarlari";
+}
+
+<section class="grid gap-6 lg:grid-cols-2">
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-semibold text-slate-900">Genel Tema</h2>
+        <p class="mt-1 text-sm text-slate-500">Tum sayfalarda kullanilacak renkleri buradan guncelleyebilirsiniz.</p>
+
+        <form asp-controller="Theme" asp-action="Index" method="post" class="mt-5 space-y-4">
+            @Html.AntiForgeryToken()
+            <label class="inline-flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="IsDarkMode" value="true" checked="@Model.IsDarkMode" />
+                Koyu tema aktif
+            </label>
+            <input type="hidden" name="IsDarkMode" value="false" />
+
+            <div class="grid gap-4 sm:grid-cols-2">
+                <label class="text-sm text-slate-700">Ana Renk
+                    <input type="color" name="PrimaryColor" value="@Model.PrimaryColor" class="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-2" />
+                </label>
+                <label class="text-sm text-slate-700">Ikinci Renk
+                    <input type="color" name="SecondaryColor" value="@Model.SecondaryColor" class="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-2" />
+                </label>
+                <label class="text-sm text-slate-700">Vurgu Rengi
+                    <input type="color" name="AccentColor" value="@Model.AccentColor" class="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-2" />
+                </label>
+                <label class="text-sm text-slate-700">Arkaplan
+                    <input type="color" name="BackgroundColor" value="@Model.BackgroundColor" class="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-2" />
+                </label>
+                <label class="text-sm text-slate-700">Yuzey
+                    <input type="color" name="SurfaceColor" value="@Model.SurfaceColor" class="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-2" />
+                </label>
+                <label class="text-sm text-slate-700">Yazi Rengi
+                    <input type="color" name="TextColor" value="@Model.TextColor" class="mt-1 h-10 w-full rounded-lg border border-slate-300 bg-white px-2" />
+                </label>
+            </div>
+
+            <button type="submit" class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700">
+                Tema Ayarlarini Kaydet
+            </button>
+        </form>
+    </div>
+
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <h3 class="text-lg font-semibold text-slate-900">Onizleme</h3>
+        <div class="mt-4 rounded-xl border border-slate-200 p-5" style="background:@Model.BackgroundColor;color:@Model.TextColor;">
+            <div class="rounded-lg p-4" style="background:@Model.SurfaceColor;">
+                <p class="text-sm">Bu alan tema ayarlarinin canli bir onizlemesidir.</p>
+                <div class="mt-4 flex gap-2">
+                    <button type="button" class="rounded-lg px-3 py-2 text-sm font-semibold text-white" style="background:@Model.PrimaryColor;">Primary</button>
+                    <button type="button" class="rounded-lg px-3 py-2 text-sm font-semibold text-white" style="background:@Model.SecondaryColor;">Secondary</button>
+                    <button type="button" class="rounded-lg px-3 py-2 text-sm font-semibold text-white" style="background:@Model.AccentColor;">Accent</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

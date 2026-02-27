@@ -1,0 +1,206 @@
+@model mym.Models.Topic
+
+@{
+    ViewData["Title"] = Model?.Title;
+    var canPostComment = (ViewBag.CanPostComment as bool?) == true;
+    var canModerate = (ViewBag.CanModerate as bool?) == true;
+}
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-6">
+        <a asp-controller="Forum" asp-action="Details" asp-route-id="@Model?.ForumId" class="inline-block bg-gray-300 text-gray-700 hover:bg-gray-400 font-bold py-2 px-4 rounded-lg transition-all duration-300">
+            <i class="fas fa-arrow-left mr-2"></i>Foruma Geri Don
+        </a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="mb-6 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-amber-800">
+            @TempData["Message"]
+        </div>
+    }
+
+    <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+        <div class="flex items-start justify-between mb-4">
+            <div class="flex-1">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">@Model?.Title</h1>
+                <div class="flex flex-wrap items-center text-sm text-gray-500 gap-x-6 gap-y-2">
+                    <button type="button" class="profile-link text-left hover:text-indigo-600 transition-colors" data-username="@Model?.AuthorName">
+                        <i class="fas fa-user-circle mr-2"></i>@Model?.AuthorName
+                    </button>
+                  @* buray başarı mesajı gelebilir ek olarfak da burya kulacncı adı gelebilir *@
+                    <span><i class="fas fa-calendar mr-2"></i>@Model?.CreatedDate.ToString("dd MMM yyyy HH:mm")</span>
+                    <span><i class="fas fa-eye mr-2"></i>@Model?.ViewCount goruntuleme</span>
+                </div>
+            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div class="ml-4 flex items-center gap-2">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="inline-flex items-center bg-blue-600 text-white hover:bg-blue-700 px-3 py-1 rounded text-sm">
+                        <i class="fas fa-edit mr-1"></i>Duzenle
+                    </a>
+                    <form asp-action="Delete" asp-route-id="@Model?.Id" method="post" class="inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="inline-flex items-center bg-red-600 text-white hover:bg-red-700 px-3 py-1 rounded text-sm" onclick="return confirm('Emin misiniz?')">
+                            <i class="fas fa-trash mr-1"></i>Sil
+                        </button>
+                    </form>
+                    @if (canModerate)
+                    {
+                        <form asp-action="Kaldir" asp-controller="Topic" asp-route-id="@Model?.Id" method="post" class="inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="inline-flex items-center bg-slate-600 text-white hover:bg-slate-700 px-3 py-1 rounded text-sm" onclick="return confirm('Icerik yayindan kaldirilsin mi?')">
+                                <i class="fas fa-eye-slash mr-1"></i>Kaldir
+                            </button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+
+        <div class="prose max-w-none">
+            <div class="bg-gray-50 p-6 rounded-lg border-l-4 border-indigo-600">
+                <p class="text-gray-800 whitespace-pre-wrap">@Model?.Content</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">
+            <i class="fas fa-comments mr-2 text-indigo-600"></i>Yorumlar (@Model?.Comments?.Count)
+        </h2>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 border-t-4 border-indigo-600">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Yorum Ekle</h3>
+
+            @if (User.Identity?.IsAuthenticated != true)
+            {
+                <div class="rounded-lg border border-blue-200 bg-blue-50 p-4 text-blue-800">
+                    Yorum yazmak icin once giris yapmalisin.
+                </div>
+            }
+            else if (!canPostComment)
+            {
+                <div class="rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-800">
+                    Hesabin henuz admin onayinda. Durum onaylanana kadar yorum yazamazsin.
+                </div>
+            }
+            else
+            {
+                <form asp-controller="Comment" asp-action="Create" method="post" asp-route-topicId="@Model?.Id">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 font-semibold mb-2">Yorum</label>
+                        <textarea name="Content" placeholder="Yorumunu yaz..." rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-2 px-4 rounded-lg transition-colors duration-300">
+                        <i class="fas fa-paper-plane mr-2"></i>Yorumu Paylas
+                    </button>
+                </form>
+            }
+        </div>
+
+        <div class="space-y-4">
+            @if (Model?.Comments != null && Model.Comments.Any())
+            {
+                @foreach (var comment in Model.Comments.OrderBy(c => c.CreatedDate))
+                {
+                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <button type="button" class="profile-link text-lg font-bold text-gray-800 hover:text-indigo-600 transition-colors" data-username="@comment.AuthorName">
+                                    @comment.AuthorName
+                                </button>
+                                <div class="flex flex-wrap items-center text-sm text-gray-500 gap-x-4 gap-y-2">
+                                    <span><i class="fas fa-graduation-cap mr-1"></i>@comment.AuthorEmail</span>
+                                    <span><i class="fas fa-calendar mr-1"></i>@comment.CreatedDate.ToString("dd MMM yyyy HH:mm")</span>
+                                </div>
+                            </div>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <form asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" method="post" style="display:inline;">
+                                    <button type="submit" class="text-red-600 hover:text-red-800" onclick="return confirm('Bu yorumu silmek istiyor musun?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            }
+                        </div>
+
+                        <p class="text-gray-700 mb-4 whitespace-pre-wrap">@comment.Content</p>
+
+                        <div class="flex items-center justify-between">
+                            <form asp-controller="Comment" asp-action="Like" asp-route-id="@comment.Id" method="post" style="display:inline;">
+                                <button type="submit" class="text-red-600 hover:text-red-800 text-sm font-semibold">
+                                    <i class="fas fa-heart mr-1"></i>@comment.LikeCount Begeni
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="text-center py-8 bg-gray-50 rounded-lg">
+                    <i class="fas fa-comments text-4xl text-gray-300 mb-2"></i>
+                    <p class="text-gray-500">Henuz yorum yok.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="profile-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-md rounded-xl bg-white p-6 shadow-xl">
+        <div class="flex items-start justify-between">
+            <div>
+                <h3 id="profile-username" class="text-xl font-bold text-slate-900"></h3>
+                <p id="profile-title" class="mt-1 text-sm text-indigo-700 font-semibold"></p>
+            </div>
+            <button id="profile-close" class="text-slate-500 hover:text-slate-800">
+                <i class="fas fa-xmark text-xl"></i>
+            </button>
+        </div>
+        <p id="profile-bio" class="mt-4 text-slate-700 whitespace-pre-wrap"></p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const modal = document.getElementById("profile-modal");
+            const closeBtn = document.getElementById("profile-close");
+            const usernameEl = document.getElementById("profile-username");
+            const titleEl = document.getElementById("profile-title");
+            const bioEl = document.getElementById("profile-bio");
+
+            const closeModal = () => modal.classList.add("hidden");
+            closeBtn?.addEventListener("click", closeModal);
+            modal?.addEventListener("click", (e) => {
+                if (e.target === modal || e.target.classList.contains("bg-black/40")) {
+                    closeModal();
+                }
+            });
+
+            document.querySelectorAll(".profile-link").forEach((btn) => {
+                btn.addEventListener("click", async () => {
+                    const username = btn.getAttribute("data-username");
+                    if (!username) {
+                        return;
+                    }
+
+                    const response = await fetch(`/Account/ProfileCard?username=${encodeURIComponent(username)}`);
+                    if (!response.ok) {
+                        return;
+                    }
+
+                    const data = await response.json();
+                    usernameEl.textContent = data.username ?? username;
+                    titleEl.textContent = data.educationTitle ?? "Lisans";
+                    bioEl.textContent = data.bio ?? "Bio girilmemis.";
+                    modal.classList.remove("hidden");
+                });
+            });
+        })();
+    </script>
+}

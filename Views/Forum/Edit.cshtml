@@ -1,0 +1,97 @@
+@model mym.Models.Forum
+
+@{
+    ViewData["Title"] = "Ürün Sil";
+}
+
+<div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto">
+        <!-- Uyarı Başlığı -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <!-- Kırmızı Header -->
+            <div class="bg-red-600 px-6 py-4">
+                <div class="flex items-center">
+                    <svg class="h-6 w-6 text-white mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <h1 class="text-2xl font-bold text-white">Silme Onayı</h1>
+                </div>
+            </div>
+
+            <!-- İçerik -->
+            <div class="px-6 py-8">
+                <p class="text-lg text-gray-700 mb-6">
+                    Bu ürünü silmek istediğinizden emin misiniz?
+                </p>
+
+                <!-- Ürün Bilgileri -->
+                <div class="bg-gray-50 rounded-lg border border-gray-200 overflow-hidden">
+                    <!-- Ürün Adı -->
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <dt class="text-sm font-medium text-gray-500 mb-1">
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+                        <dd class="text-lg font-semibold text-gray-900">
+                            @Html.DisplayFor(model => model.Title)
+                        </dd>
+                    </div>
+
+                    <!-- Fiyat -->
+                    <div class="px-6 py-4 border-b border-gray-200 bg-white">
+                        <dt class="text-sm font-medium text-gray-500 mb-1">
+                            @Html.DisplayNameFor(model => model.Category)
+                        </dt>
+                        <dd class="text-lg font-semibold text-green-600">
+                            @Html.DisplayFor(model => model.Category) 
+                        </dd>
+                    </div>
+
+                    <!-- Stok -->
+                    <div class="px-6 py-4 bg-gray-50">
+                        <dt class="text-sm font-medium text-gray-500 mb-1">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd class="text-lg font-semibold text-gray-900">
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                    </div>
+                </div>
+
+                <!-- Uyarı Mesajı -->
+                <div class="mt-6 bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-red-700">
+                                Bu işlem geri alınamaz. Ürün kalıcı olarak silinecektir.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Butonlar -->
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                    <form asp-action="Delete" method="post" class="flex-1">
+                        <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200 shadow-sm">
+                            <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Evet, Sil
+                        </button>
+                    </form>
+                    
+                    <a asp-action="Index" class="flex-1 inline-flex justify-center items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200 shadow-sm">
+                        <svg class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        İptal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

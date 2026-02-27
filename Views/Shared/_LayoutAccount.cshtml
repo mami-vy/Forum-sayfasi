@@ -1,0 +1,58 @@
+@using mym.Services
+@inject IThemeSettingsService ThemeSettingsService
+@{
+    var theme = await ThemeSettingsService.GetCurrentAsync();
+    var bodyClass = theme.IsDarkMode ? "theme-dark" : "theme-light";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hesap Yonetimi</title>
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body class="min-h-screen @bodyClass" style="--theme-primary:@theme.PrimaryColor;--theme-secondary:@theme.SecondaryColor;--theme-accent:@theme.AccentColor;--theme-bg:@theme.BackgroundColor;--theme-surface:@theme.SurfaceColor;--theme-text:@theme.TextColor; background:var(--theme-bg); color:var(--theme-text);">
+    <header class="py-6">
+        <div class="container mx-auto px-4 text-center">
+            <a asp-controller="Home" asp-action="Index" class="inline-block">
+                <h1 class="text-3xl font-bold text-gray-900">
+                    <span class="text-blue-600">My</span>M
+                </h1>
+            </a>
+        </div>
+    </header>
+
+    <main class="px-4 py-8">
+        <div class="container mx-auto flex justify-center">
+            <div class="w-full max-w-md">
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-auto py-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center text-sm text-gray-600">
+                <p>&copy; @DateTime.Now.Year - MyM. Tum haklari saklidir.</p>
+                <div class="mt-2 space-x-4">
+                    <a asp-controller="Home" asp-action="Privacy" class="transition hover:text-blue-600">Gizlilik Politikasi</a>
+                    <span class="text-gray-400">|</span>
+                    <a asp-controller="Home" asp-action="Terms" class="transition hover:text-blue-600">Kullanim Kosullari</a>
+                    <span class="text-gray-400">|</span>
+                    <a asp-controller="Home" asp-action="CookiePolicy" class="transition hover:text-blue-600">Cerez Politikasi</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

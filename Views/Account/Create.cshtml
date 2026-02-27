@@ -1,0 +1,92 @@
+@model mym.Models.AccountCreateModel
+@{
+    ViewData["Title"] = "Hesap Olustur";
+    Layout = "_LayoutAccount";
+}
+
+<section class="min-h-screen bg-stone-100 py-12 px-4">
+    <div class="container mx-auto flex justify-center">
+        <div class="w-full max-w-2xl">
+            <div class="rounded-lg bg-white shadow-lg">
+                <div class="p-8">
+                    <div class="mb-8 text-center">
+                        <div class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+                            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="mb-2 text-3xl font-bold text-gray-900">Hesap Olustur</h2>
+                        <p class="text-sm text-gray-600">Hemen baslayin, ucretsiz</p>
+                    </div>
+
+                    <form method="post" novalidate>
+                        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.ErrorCount > 0)
+                        {
+                            <div asp-validation-summary="All" class="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-red-600"></div>
+                        }
+
+                        <div class="mb-5">
+                            <label asp-for="Name" class="mb-2 block text-sm font-medium text-gray-700"></label>
+                            <input asp-for="Name" class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500">
+                            <span asp-validation-for="Name" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="Surname" class="mb-2 block text-sm font-medium text-gray-700"></label>
+                            <input asp-for="Surname" class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500">
+                            <span asp-validation-for="Surname" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="Username" class="mb-2 block text-sm font-medium text-gray-700"></label>
+                            <input asp-for="Username" class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500">
+                            <span asp-validation-for="Username" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="Eposta" class="mb-2 block text-sm font-medium text-gray-700"></label>
+                            <input asp-for="Eposta" class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500">
+                            <span asp-validation-for="Eposta" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="Password" class="mb-2 block text-sm font-medium text-gray-700"></label>
+                            <input asp-for="Password" class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500">
+                            <span asp-validation-for="Password" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <div class="mb-6">
+                            <label asp-for="ConfirmPassword" class="mb-2 block text-sm font-medium text-gray-700"></label>
+                            <input asp-for="ConfirmPassword" class="w-full rounded-lg border border-gray-300 px-4 py-2 outline-none transition focus:border-transparent focus:ring-2 focus:ring-blue-500">
+                            <span asp-validation-for="ConfirmPassword" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <div class="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm">
+                            <div class="flex items-start space-x-3">
+                                <input asp-for="AcceptLegalTerms" class="mt-1 h-5 w-5 cursor-pointer rounded border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500">
+                                <label asp-for="AcceptLegalTerms" class="cursor-pointer text-sm text-gray-700">
+                                    <a asp-controller="Home" asp-action="AydinlatmaMetni" target="_blank" class="font-medium text-blue-600 underline decoration-2 transition hover:text-blue-800">Aydinlatma Metni</a>
+                                    <span> ve </span>
+                                    <a asp-controller="Home" asp-action="Terms" target="_blank" class="font-medium text-blue-600 underline decoration-2 transition hover:text-blue-800">Kullanim Kosullari</a>
+                                    <span> metinlerini okudum ve kabul ediyorum.</span>
+                                </label>
+                            </div>
+                            <span asp-validation-for="AcceptLegalTerms" class="mt-1 block text-sm text-red-500"></span>
+                        </div>
+
+                        <button type="submit" class="mb-2 w-full rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition duration-200 ease-in-out hover:scale-[1.02] hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Kaydet
+                        </button>
+
+                        <div class="mt-6 border-t border-gray-200 pt-6">
+                            <p class="text-center text-sm text-gray-600">
+                                Zaten bir hesabin var mi?
+                                <a asp-action="Login" asp-controller="Account" class="font-semibold text-blue-600 transition hover:text-blue-800">Giris Yap</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,229 @@
+﻿@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+<!-- Hero Banner Section -->
+<section class="relative w-full min-h-[36rem] md:h-screen bg-gradient-to-r from-indigo-600 to-purple-700 overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+        <svg class="absolute bottom-0 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="currentColor" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,133.3C1248,128,1344,128,1392,128L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Left Content -->
+            <div class="text-white z-10 py-8 md:py-0">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+                    Üniversite Öğrenci Forumu
+                </h1>
+                <p class="text-base sm:text-lg md:text-xl mb-2 text-indigo-100">
+                    <i class="fas fa-users mr-2"></i>Bilgi Paylaş, Soru Sor, Arkadaş Bul
+                </p>
+                <p class="text-sm sm:text-base md:text-lg mb-6 text-gray-100 leading-relaxed">
+                    Üniversite yaşamının tüm yönleri hakkında öğrencilerle iletişim kur, bilgi paylaş ve deneyim kazanı. Derslerden sosyal etkinliklere kadar her konuda tartışma yapabilirsin.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a asp-controller="Forum" asp-action="Index" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-center">
+                        <i class="fas fa-comments mr-2"></i>Forumlara Gözat
+                    </a>
+                    <a href="#features" class="inline-block bg-indigo-500 text-white hover:bg-indigo-400 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-center border-2 border-white">
+                        <i class="fas fa-info-circle mr-2"></i>Daha Fazla Bilgi
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-8 grid grid-cols-3 gap-4 sm:gap-8 text-sm">
+                    <div class="min-w-0">
+                        <p class="text-2xl font-bold">@ViewBag.TotalUsers+</p>
+                        <p class="text-indigo-100">Aktif Üye</p>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-2xl font-bold">@ViewBag.TotalTopics+</p>
+                        <p class="text-indigo-100">Konu</p>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-2xl font-bold">@ViewBag.TotalComments+</p>
+                        <p class="text-indigo-100">Yorum</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Image/Illustration -->
+            <div class="hidden md:flex justify-center items-center">
+                <div class="relative w-96 h-96">
+                    <div class="absolute inset-0 bg-purple-400 rounded-full opacity-20 blur-3xl"></div>
+                    <div class="relative bg-white bg-opacity-10 backdrop-blur-md rounded-full p-8 flex items-center justify-center h-96 w-96">
+                        <div class="text-center">
+                            <i class="fas fa-comments text-9xl text-white opacity-30 mb-4"></i>
+                            <p class="text-white text-lg font-semibold">Yüzlerce Tartışma</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-12 md:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Forum Avantajları</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Üniversite yaşamını daha kolay ve sosyal hale getirmek için tasarlandı
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Feature 1 -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+                <div class="text-5xl text-indigo-600 mb-4 flex justify-center">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Eğitim</h3>
+                <p class="text-gray-600 text-sm">Derslerle ilgili soru sor ve cevap al</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+                <div class="text-5xl text-indigo-600 mb-4 flex justify-center">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Sosyal Ağ</h3>
+                <p class="text-gray-600 text-sm">Aynı üniversitedeki arkadaşlar bul</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+                <div class="text-5xl text-indigo-600 mb-4 flex justify-center">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Etkinlikler</h3>
+                <p class="text-gray-600 text-sm">Kampüs etkinlikleri ve sosyal aktiviteler</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+                <div class="text-5xl text-indigo-600 mb-4 flex justify-center">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Bilgi Paylaşımı</h3>
+                <p class="text-gray-600 text-sm">Deneyim ve bilgi paylaş, öğren</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Forums Section -->
+<section id="forums" class="py-12 md:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Forum Kategorileri</h2>
+            <p class="text-lg text-gray-600">İlginizi çeken kategorileri keşfedin</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach (var forum in ViewBag.Forums)
+            {
+                <div class="bg-white border-2 border-indigo-200 rounded-lg shadow-md hover:shadow-xl hover:border-indigo-600 transition-all duration-300 overflow-hidden group cursor-pointer h-full">
+                    <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 p-6 text-white">
+                        <div class="flex items-center justify-between mb-3">
+                            <i class="@forum.Icon text-4xl opacity-80"></i>
+                            <span class="bg-indigo-400 px-3 py-1 rounded-full text-sm font-bold">@forum.TopicCount Konu</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">@forum.Title</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">@forum.Description</p>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-gray-500">
+                            <span><i class="fas fa-comments mr-2"></i>@forum.CommentCount Yorum</span>
+                            <span><i class="fas fa-user mr-2"></i>@forum.TopicCount Üye</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Recent Topics Section -->
+<section class="py-12 md:py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Son Konular</h2>
+            <p class="text-lg text-gray-600">En aktif ve popüler konuları gözlemle</p>
+        </div>
+
+        <div class="space-y-4">
+            @foreach (var topic in ViewBag.RecentTopics)
+            {
+                <div class="bg-white p-4 sm:p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-indigo-600">
+                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+                        <div class="flex-1">
+                            <a asp-controller="Topic" asp-action="Details" asp-route-id="@topic.Id" class="text-lg sm:text-xl font-bold text-gray-800 hover:text-indigo-600 cursor-pointer transition-colors break-words">
+                                @topic.Title
+                            </a>
+                            <p class="text-sm text-gray-500 mt-2 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                                <span><i class="fas fa-user mr-2"></i><span class="font-semibold">@topic.AuthorName</span> tarafindan</span>
+                                <span class="sm:ml-4"><i class="fas fa-calendar mr-2"></i>@topic.CreatedDate.ToString("g")</span>
+                            </p>
+                        </div>
+                        <span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap self-start sm:ml-4">
+                            @topic.Forum?.Title
+                        </span>
+                    </div>
+                    <p class="text-gray-600 mb-4 text-sm sm:text-base break-words">@(topic.Content?.Length > 150 ? topic.Content.Substring(0, 150) + "..." : topic.Content)</p>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-sm text-gray-500">
+                        <div class="flex flex-wrap gap-4 sm:gap-6">
+                            <span><i class="fas fa-comments mr-2"></i>@topic.CommentCount Yorum</span>
+                            <span><i class="fas fa-eye mr-2"></i>@topic.ViewCount Görüntüleme</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            @if (topic.CommentCount > 0)
+                            {
+                                <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Aktif</span>
+                            }
+                            else
+                            {
+                                <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">Cevap Bekleniyor</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-12">
+            <a asp-controller="Forum" asp-action="Index" class="inline-block bg-indigo-600 text-white hover:bg-indigo-700 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                <i class="fas fa-arrow-right mr-2"></i>Tüm Forumlara Gözat
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="new-topic" class="bg-gradient-to-r from-indigo-600 to-purple-700 py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                <i class="fas fa-lightbulb mr-3"></i>Fikrini Paylaş!
+            </h2>
+            <p class="text-lg text-indigo-100 mb-6">
+                Bir sorun mu var? Bir fikir mi? Veya birisini mi arıyorsun? Hemen yeni bir konu oluştur!
+            </p>
+            <a asp-controller="Topic" asp-action="Create" asp-route-forumId="1" class="inline-block bg-white text-indigo-600 hover:bg-gray-100 font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-center">
+                <i class="fas fa-plus mr-2"></i>Yeni Konu Oluştur
+            </a>
+        </div>
+    </div>
+</section>

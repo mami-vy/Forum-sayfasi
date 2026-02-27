@@ -1,0 +1,48 @@
+<footer class="mt-12 border-t border-slate-200 bg-gradient-to-b from-slate-50 to-white">
+    <div class="mx-auto w-full max-w-7xl px-6 py-10">
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+                <h4 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-900">Hakkimizda</h4>
+                <p class="text-sm leading-6 text-slate-600">
+                    UniYORUM, ogrencilerin bilgi paylastigi ve birlikte gelistigi bir topluluk platformudur.Kuruculuğu üstlendiğim bu web
+                </p>
+            </div>
+
+            <div>
+                <h4 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-900">Yardim</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="text-slate-600 transition hover:text-indigo-600">Iletisim</a></li>
+                    <li><a href="#" class="text-slate-600 transition hover:text-indigo-600">SSS</a></li>
+                    <li><a asp-controller="Home" asp-action="Terms" class="text-slate-600 transition hover:text-indigo-600">Kullanim Kosullari</a></li>
+                </ul>
+            </div>SonarCloud
+
+            <div>
+                <h4 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-900">Hesap</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a asp-action="Login" asp-controller="Account" class="text-slate-600 transition hover:text-indigo-600">Giris Yap</a></li>
+                    <li><a asp-action="Create" asp-controller="Account" class="text-slate-600 transition hover:text-indigo-600">Kayit Ol</a></li>
+                    <li><a asp-action="Login" asp-controller="Account" class="text-slate-600 transition hover:text-indigo-600">Profilim</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-900">Sosyal Aglar</h4>
+                <div class="flex items-center gap-4 text-lg">
+                    <a href="#" aria-label="Facebook" class="text-slate-500 transition hover:text-indigo-600"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter" class="text-slate-500 transition hover:text-indigo-600"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram" class="text-slate-500 transition hover:text-indigo-600"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 flex flex-col gap-2 border-t border-slate-200 pt-5 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <p>&copy; @DateTime.Now.Year mym. Tum haklari saklidir.</p>
+            <div class="flex items-center gap-3">
+                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="transition hover:text-indigo-600">Gizlilik</a>
+                <a asp-controller="Home" asp-action="CookiePolicy" class="transition hover:text-indigo-600">Cerez</a>
+                <a asp-controller="Home" asp-action="AydinlatmaMetni" class="transition hover:text-indigo-600">Aydinlatma Metni</a>
+            </div>
+        </div>
+    </div>
+</footer>

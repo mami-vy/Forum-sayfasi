@@ -1,0 +1,81 @@
+@model IEnumerable<AppRole>
+@{
+   ViewData["Title"] = "Sistem Rolleri Yönetimi";
+    Layout = "_AdminLayout";
+}
+
+
+
+<div class="container mx-auto px-4 mt-10">
+    
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+        <div class="mb-4 md:mb-0">
+            <h2 class="text-3xl font-bold text-gray-800 tracking-tight">Rol Envanteri</h2>
+            <p class="text-sm text-gray-500 mt-1">Sistemde tanımlı olan yetki gruplarının tam listesidir.</p>
+        </div>
+        <div>
+            <a asp-action="Create" class="inline-flex items-center px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-full shadow-sm transition-colors duration-200">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                Yeni Rol Ekle
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
+        <div class="overflow-x-auto">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-4 border-b-2 border-gray-200 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                            Sistem ID
+                        </th>
+                        <th class="px-6 py-4 border-b-2 border-gray-200 bg-gray-800 text-left text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                            Rol Tanımı (Adı)
+                        </th>
+                        <th class="px-6 py-4 border-b-2 border-gray-200 bg-gray-800 text-center text-xs font-semibold text-gray-100 uppercase tracking-wider">
+                            Yönetimsel İşlemler
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @if (Model != null && Model.Any())
+                    {
+                        var rowNumber = 1;
+                        foreach (var role in Model)
+                        {
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="font-mono text-sm text-gray-500">@rowNumber</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="font-medium text-gray-900">@role.Name</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                    <a asp-action="Edit" asp-route-id="@role.Id" class="inline-flex items-center px-3 py-1.5 border border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white rounded-md transition-colors duration-200 mr-2">
+                                        Düzenle
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@role.Id" class="inline-flex items-center px-3 py-1.5 border border-red-500 text-red-600 hover:bg-red-500 hover:text-white rounded-md transition-colors duration-200">
+                                        Sil
+                                    </a>
+                                </td>
+                            </tr>
+                            rowNumber++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="px-6 py-10 text-center bg-gray-50">
+                                <div class="flex flex-col items-center justify-center">
+                                    <svg class="w-12 h-12 text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                                    <p class="text-gray-500 text-base">Sistemde kayıtlı herhangi bir rol bulunamadı.</p>
+                                    <span class="text-sm text-gray-400">Yönetime başlamak için yeni bir rol tanımlayınız.</span>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

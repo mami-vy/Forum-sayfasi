@@ -1,0 +1,60 @@
+    <!-- Başarı Alerti -->
+   @if (TempData["Message"] != null)
+{
+
+    
+        <div id="success-alert" class=" alert bg-green-100 border border-green-400 text-green-700 px-4 py-3 m-2px  rounded relative transition-opacity duration-500 ease-in-out flex items-center justify-between mt-4 mb-3 " role="alert" style="max-width: 100%; position: fixed; top: 40px; right: 40px; z-index: 1000;">
+            <div class="flex items-center">
+                <i class="fa-solid fa-circle-check text-xl mr-2"></i>
+                <span class="block sm:inline font-semibold">@TempData["Message"]</span>
+            </div>
+            <button class="alert-close-btn text-green-700 hover:text-green-900 ml-4 p-2 focus:outline-none" type="button" aria-label="Close">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+}
+@if (TempData["BoostrapMessage"] != null)
+{
+<div class="alert alert-success alert-dismissible fade show d-flex align-items-center mt-4 mb-3 shadow" role="alert" style="max-width: 100%; position: fixed; top: 40px; right: 40px; z-index: 1000;">
+    <i class="fa-solid fa-circle-check me-2 fs-5"></i>
+    <span class="fw-semibold">@TempData["BoostrapMessage"]</span>
+    <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+}
+
+ @* <!-- Hata Alerti -->
+        <div id="error-alert" class="alert bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative transition-opacity duration-500 ease-in-out flex items-center justify-between" role="alert">
+            <div class="flex items-center">
+                <i class="fa-solid fa-circle-xmark text-xl mr-2"></i>
+                <span class="block sm:inline font-semibold">Bir hata oluştu. Lütfen tekrar deneyin.</span>
+            </div>
+            <button class="alert-close-btn text-red-700 hover:text-red-900 ml-4 p-2 focus:outline-none" type="button" aria-label="Close">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Uyarı Alerti -->
+        @* <div id="warning-alert" class="alert bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative transition-opacity duration-500 ease-in-out flex items-center justify-between" role="alert">
+            <div class="flex items-center">
+                <i class="fa-solid fa-triangle-exclamation text-xl mr-2"></i>
+                <span class="block sm:inline font-semibold">Dikkat! Bilgileri kontrol etmelisiniz.</span>
+            </div>
+            <button class="alert-close-btn text-yellow-700 hover:text-yellow-900 ml-4 p-2 focus:outline-none" type="button" aria-label="Close">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div> *@
+
+        <!-- Bilgi Alerti -->
+        @if (TempData["İnfoMessage"] != null)
+        {
+        <div id="info-alert" class="alert bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative transition-opacity duration-500 ease-in-out flex items-center justify-between" role="alert">
+            <div class="flex items-center">
+                <i class="fa-solid fa-circle-info text-xl mr-2"></i>
+                <span class="block sm:inline font-semibold">@TempData["İnfoMessage"]</span>
+            </div>
+            <button class="alert-close-btn text-blue-700 hover:text-blue-900 ml-4 p-2 focus:outline-none" type="button" aria-label="Close">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div> 
+         }

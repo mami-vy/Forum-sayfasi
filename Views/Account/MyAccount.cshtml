@@ -1,0 +1,179 @@
+@model mym.Models.MyAccountViewModel
+
+@{
+    ViewData["Title"] = "Profilim";
+}
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+
+    .profile-page * {
+        font-family: 'DM Sans', sans-serif;
+    }
+
+    .profile-heading {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .avatar-ring {
+        background: conic-gradient(from 180deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #6366f1);
+        animation: spin-slow 6s linear infinite;
+    }
+
+    @@keyframes spin-slow {
+        to { transform: rotate(360deg); }
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .input-field {
+        transition: all 0.2s ease;
+        background: rgba(249, 250, 251, 0.8);
+        border: 1.5px solid #e5e7eb;
+    }
+
+    .input-field:focus {
+        background: white;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        outline: none;
+    }
+
+    .save-btn {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    }
+
+    .save-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+    }
+
+    .save-btn:active {
+        transform: translateY(0);
+    }
+
+    .page-bg {
+        background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 50%, #fdf2f8 100%);
+        min-height: 100vh;
+    }
+
+    .decorative-dot {
+        background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+    }
+</style>
+
+<div class="profile-page page-bg relative overflow-hidden">
+
+    
+    <div class="absolute top-0 left-0 w-96 h-96 decorative-dot rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+    <div class="absolute bottom-0 right-0 w-80 h-80 decorative-dot rounded-full translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+
+    <div class="relative max-w-2xl mx-auto px-4 sm:px-6 py-12">
+
+   
+        <div class="glass-card rounded-3xl shadow-2xl border border-white/60 overflow-hidden">
+
+            
+            <div class="relative h-28 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 overflow-hidden">
+                <div class="absolute inset-0 opacity-20"
+                     style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 20%, white 1px, transparent 1px); background-size: 30px 30px;">
+                </div>
+                <div class="absolute -bottom-1 left-0 right-0 h-8 bg-white/85" style="border-radius: 50% 50% 0 0 / 100% 100% 0 0; backdrop-filter: blur(20px);"></div>
+            </div>
+
+           
+            <div class="px-8 pb-2 -mt-10 flex items-end gap-5">
+                <div class="relative flex-shrink-0">
+                 
+                    <div class="avatar-ring w-20 h-20 rounded-full flex items-center justify-center">
+                        <div class="w-[72px] h-[72px] rounded-full bg-white flex items-center justify-center">
+                            <span class="text-2xl font-bold bg-gradient-to-br from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                                @(!string.IsNullOrWhiteSpace(Model.Username) ? Model.Username[..1].ToUpperInvariant() : "U")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-3">
+                    <h1 class="profile-heading text-2xl font-bold text-slate-800 leading-tight">Profilim</h1>
+                    <p class="text-sm text-slate-400 font-medium tracking-wide mt-0.5">@@@Model.Username</p>
+                </div>
+            </div>
+
+        
+            <div class="mx-8 mt-4 mb-6 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+
+        
+            <form asp-action="MyAccount" method="post" class="px-8 pb-8 space-y-6">
+                @Html.AntiForgeryToken()
+
+             
+                <div class="space-y-1.5">
+                    <label asp-for="Email" class="block text-xs font-semibold text-slate-400 uppercase tracking-widest"></label>
+                    <div class="relative">
+                        <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        <input asp-for="Email"
+                               class="input-field w-full rounded-xl pl-10 pr-4 py-2.5 text-slate-500 text-sm cursor-not-allowed"
+                               readonly />
+                    </div>
+                </div>
+
+                
+                <div class="space-y-1.5">
+                    <label asp-for="EducationTitle" class="block text-xs font-semibold text-slate-400 uppercase tracking-widest"></label>
+                    <div class="relative">
+                        <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422A12.083 12.083 0 0121 13c0 5.52-4.478 10-10 10S1 18.52 1 13a12.083 12.083 0 012.84-7.578L12 9v5z"/>
+                        </svg>
+                        <select asp-for="EducationTitle"
+                                asp-items="Model.EducationOptions"
+                                class="input-field w-full rounded-xl pl-10 pr-8 py-2.5 text-slate-700 text-sm appearance-none cursor-pointer">
+                        </select>
+                        <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <span asp-validation-for="EducationTitle" class="text-xs text-red-500 font-medium"></span>
+                </div>
+
+                
+                <div class="space-y-1.5">
+                    <label asp-for="Bio" class="block text-xs font-semibold text-slate-400 uppercase tracking-widest"></label>
+                    <textarea asp-for="Bio"
+                              rows="4"
+                              placeholder="Kendinden kısaca bahset…"
+                              class="input-field w-full rounded-xl px-4 py-3 text-slate-700 text-sm resize-none placeholder:text-slate-300"></textarea>
+                    <span asp-validation-for="Bio" class="text-xs text-red-500 font-medium"></span>
+                </div>
+
+            
+                <div class="pt-2">
+                    <button type="submit" class="save-btn w-full sm:w-auto px-8 py-3 rounded-xl text-white font-semibold text-sm flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Kaydet
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+       
+       
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

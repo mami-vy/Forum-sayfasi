@@ -1,0 +1,103 @@
+@model mym.Models.SiteSettingsViewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Site Ayarlari";
+}
+
+<div class="w-full">
+    <div class="bg-white/60 dark:bg-slate-400/60 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 py-6 sm:flex sm:items-start sm:justify-between">
+            <div>
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Site Ayarlari</h2>
+                <p class="mt-1 text-sm text-slate-500">Site başlığı, iletişim bilgileri ve kayıt ayarlarını buradan yönetin.</p>
+            </div>
+            <div class="mt-4 sm:mt-0">
+                <button form="site-settings-form" type="submit" class="inline-flex items-center gap-2 rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700">Kaydet</button>
+                <a asp-controller="Home" asp-action="Index" class="ml-3 inline-flex items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">Vazgeç</a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 px-6 pb-6 sm:grid-cols-3">
+            <div class="sm:col-span-2">
+                <form id="site-settings-form" asp-action="Index" method="post" class="space-y-4">
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Site Adı</label>
+                        <input asp-for="SiteName" class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-300" />
+                        <span asp-validation-for="SiteName" class="text-rose-600 text-xs"></span>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Site Açıklaması</label>
+                        <textarea asp-for="SiteDescription" rows="4" class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 resize-vertical"></textarea>
+                        <span asp-validation-for="SiteDescription" class="text-rose-600 text-xs"></span>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">İletişim E-posta</label>
+                            <input asp-for="ContactEmail" class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2" />
+                            <span asp-validation-for="ContactEmail" class="text-rose-600 text-xs"></span>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Logo URL</label>
+                            <input asp-for="LogoUrl" id="logo-url" class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2" />
+                            <span asp-validation-for="LogoUrl" class="text-rose-600 text-xs"></span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <input asp-for="AllowRegistration" id="allow-registration" type="checkbox" class="h-4 w-4 rounded text-emerald-600 border-slate-300" />
+                        <label for="allow-registration" class="text-sm text-slate-700 dark:text-slate-200">Yeni kullanıcı kaydına izin ver</label>
+                    </div>
+                </form>
+            </div>
+
+            <aside class="flex flex-col items-center gap-4 rounded-lg border border-slate-100 bg-slate-50 p-4 dark:bg-slate-900/40 dark:border-slate-700">
+                <div class="w-36 h-36 flex items-center justify-center overflow-hidden rounded-md bg-white border border-slate-200">
+                    <img id="logo-preview" src="@Model.LogoUrl" alt="Logo önizleme" class="max-h-full max-w-full object-contain" onerror="this.src='/img/maybering.png'" />
+                </div>
+                <div class="text-center">
+                    <p class="text-sm text-slate-600 dark:text-slate-300">Logo önizleme (URL girin)</p>
+                    <p class="mt-2 text-xs text-slate-400">Boşsa varsayılan logo gösterilir.</p>
+                </div>
+                <div class="w-full">
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-200">Önizleme boyutu</label>
+                    <div class="mt-2 flex items-center gap-2">
+                        <input id="preview-width" type="range" min="40" max="300" value="144" class="w-full" />
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const logoInput = document.getElementById('logo-url');
+            const logoImg = document.getElementById('logo-preview');
+            const widthRange = document.getElementById('preview-width');
+
+            function updatePreview() {
+                if (!logoImg) return;
+                logoImg.src = logoInput ? logoInput.value || '/img/maybering.png' : '/img/maybering.png';
+            }
+
+            if (logoInput) {
+                logoInput.addEventListener('input', updatePreview);
+                logoInput.addEventListener('change', updatePreview);
+            }
+
+            if (widthRange && logoImg) {
+                widthRange.addEventListener('input', function () {
+                    logoImg.style.maxWidth = this.value + 'px';
+                });
+                // initialize
+                logoImg.style.maxWidth = widthRange.value + 'px';
+            }
+        })();
+    </script>
+}

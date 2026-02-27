@@ -1,0 +1,74 @@
+@model mym.Models.Topic
+
+@{
+    ViewData["Title"] = "Konuyu Sil";
+}
+
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Back Button -->
+    <div class="mb-6">
+        <a asp-action="Details" asp-route-id="@Model?.Id" class="inline-block bg-gray-300 text-gray-700 hover:bg-gray-400 font-bold py-2 px-4 rounded-lg transition-all duration-300">
+            <i class="fas fa-arrow-left mr-2"></i>Geri Dön
+        </a>
+    </div>
+
+    <!-- Delete Confirmation Card -->
+    <div class="bg-white rounded-lg shadow-md p-8 border-l-4 border-red-600">
+        <div class="text-center mb-6">
+            <i class="fas fa-exclamation-triangle text-6xl text-red-600 mb-4"></i>
+            <h1 class="text-3xl font-bold text-gray-800">Bu Konuyu Silmek Üzeresiniz</h1>
+        </div>
+
+        <div class="bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+            <h3 class="font-bold text-red-800 mb-2">
+                <i class="fas fa-alert-circle mr-2"></i>Uyarı!
+            </h3>
+            <ul class="text-red-700 space-y-2">
+                <li><i class="fas fa-circle-notch text-sm mr-2"></i>Bu işlem <strong>geri alınamaz</strong></li>
+                <li><i class="fas fa-circle-notch text-sm mr-2"></i>Konuyla ilgili tüm yorumlar da silinecektir</li>
+                <li><i class="fas fa-circle-notch text-sm mr-2"></i>Veri kalıcı olarak kaldırılacaktır</li>
+            </ul>
+        </div>
+
+        <!-- Topic Details -->
+        <div class="bg-gray-50 rounded-lg p-6 mb-6">
+            <h4 class="font-bold text-gray-800 mb-3">Silinecek Konu:</h4>
+            <div class="space-y-2 text-gray-700">
+                <p><strong>Başlık:</strong> @Model?.Title</p>
+                <p><strong>Yazar:</strong> @Model?.AuthorName</p>
+                <p><strong>Forum:</strong> @Model?.Forum?.Title</p>
+                <p><strong>Oluşturma Tarihi:</strong> @Model?.CreatedDate.ToString("dd MMM yyyy HH:mm")</p>
+                <p><strong>Yorum Sayısı:</strong> @Model?.CommentCount</p>
+            </div>
+        </div>
+
+        <!-- Confirmation Text -->
+        <div class="mb-6">
+            <p class="text-gray-700 mb-4">
+                Konuyu silmek istediğinizi doğrulamak için lütfen aşağıdaki formu gönderin:
+            </p>
+        </div>
+
+        <!-- Delete Form -->
+        <form asp-action="DeleteConfirmed" method="post" class="space-y-4">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="flex gap-4">
+                <button type="submit" class="flex-1 bg-red-600 text-white hover:bg-red-700 font-bold py-3 px-6 rounded-lg transition-all duration-300" onclick="return confirm('Bu konuyu ve tüm yorumlarını silmek istediğinizden emin misiniz?')">
+                    <i class="fas fa-trash mr-2"></i>Konuyu Sil
+                </button>
+                <a asp-action="Details" asp-route-id="@Model?.Id" class="flex-1 bg-gray-300 text-gray-700 hover:bg-gray-400 font-bold py-3 px-6 rounded-lg transition-all duration-300 text-center">
+                    <i class="fas fa-times mr-2"></i>İptal
+                </a>
+            </div>
+        </form>
+
+        <!-- Info Box -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <p class="text-blue-700 text-sm">
+                <i class="fas fa-info-circle mr-2"></i>
+                Konuyu silmek yerine, konuyu kapatmak veya açıklamasını değiştirmek istiyorsanız <strong>Düzenle</strong> seçeneğini kullanabilirsiniz.
+            </p>
+        </div>
+    </div>
+</div>
