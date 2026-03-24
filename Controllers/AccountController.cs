@@ -16,6 +16,7 @@ public class AccountController : Controller
     private const string TempDataMessageKey = "Message";
 
     private readonly UserManager<AppUser> _userManager;
+    private readonly RoleManager<AppRole> _roleManager;
     private readonly SignInManager<AppUser> _signInManager;
     private readonly IUserApprovalSettings _userApprovalSettings;
     private readonly ApplicationDbContext _dbContext;
@@ -23,12 +24,14 @@ public class AccountController : Controller
 
     public AccountController(
         UserManager<AppUser> userManager,
+        RoleManager<AppRole> roleManager,
         SignInManager<AppUser> signInManager,
         IUserApprovalSettings userApprovalSettings,
         ApplicationDbContext dbContext,
         IAdminNotificationService adminNotificationService)
     {
         _userManager = userManager;
+        _roleManager = roleManager;
         _signInManager = signInManager;
         _userApprovalSettings = userApprovalSettings;
         _dbContext = dbContext;
@@ -63,6 +66,7 @@ public class AccountController : Controller
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
+            await EnsureDefaultMemberRoleAsync(user);
             await _userManager.AddClaimAsync(user, new Claim("legal_terms_accepted", "v1"));
             await _userManager.AddClaimAsync(user, new Claim("legal_terms_accepted_at_utc", DateTime.UtcNow.ToString("O")));
 
@@ -196,6 +200,7 @@ public class AccountController : Controller
             return View(model);
         }
 
+        await EnsureDefaultMemberRoleAsync(user);
         user.LastSeenAtUtc = DateTime.UtcNow;
         await _userManager.UpdateAsync(user);
         await AddLoginActivity(user.Id, user.UserName ?? model.Username, true, "Basarili giris.");
@@ -303,6 +308,32 @@ public class AccountController : Controller
         if (!string.Equals(existing.Value, value, StringComparison.Ordinal))
         {
             await _userManager.ReplaceClaimAsync(user, existing, new Claim(claimType, value));
+        }
+    }
+
+    private async Task EnsureDefaultMemberRoleAsync(AppUser user)
+    {
+        if (user.IsGuest)
+        {
+            return;
+        }
+
+        if (!await _roleManager.RoleExistsAsync("Uye"))
+        {
+            return;
+        }
+
+        var roles = await _userManager.GetRolesAsync(user);
+        if (roles.Count == 0)
+        {
+            await _userManager.AddToRoleAsync(user, "Uye");
+            return;
+        }
+
+        if (roles.Count == 1 && string.Equals(roles[0], "Ziyaretci", StringComparison.OrdinalIgnoreCase))
+        {
+            await _userManager.RemoveFromRoleAsync(user, "Ziyaretci");
+            await _userManager.AddToRoleAsync(user, "Uye");
         }
     }
 

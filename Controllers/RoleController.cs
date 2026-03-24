@@ -5,7 +5,7 @@ using mym.Models;
 
 namespace mym.Controllers;
 
-[Authorize(Policy = "FullAccess")]
+[Authorize(Policy = "ManageRoles")]
 [AutoValidateAntiforgeryToken]
 public class RoleController : Controller
 {

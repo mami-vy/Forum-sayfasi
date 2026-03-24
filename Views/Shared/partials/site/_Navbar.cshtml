@@ -20,7 +20,7 @@
                 @if (User.Identity?.IsAuthenticated == true)
                 {
                     
-                    @if (User.IsInRole("administrator") || User.IsInRole("moderatör") || User.IsInRole("Süper moderatör"))
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("SuperModerator") || User.IsInRole("Süper moderatör") || User.IsInRole("SuperModeratör") || User.IsInRole("superModerator"))
                     {
                         <a asp-action="Index" asp-controller="Role" class="hidden md:inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition-colors duration-200 shadow-md">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,7 +126,7 @@
                     </a>
 
                   
-                    @if (User.IsInRole("administrator") || User.IsInRole("moderator") || User.IsInRole("superModerator"))
+                    @if (User.IsInRole("Administrator") || User.IsInRole("Admin") || User.IsInRole("SuperModerator") || User.IsInRole("Süper moderatör") || User.IsInRole("SuperModeratör") || User.IsInRole("superModerator"))
                     {
                         <a asp-action="Index" asp-controller="Role" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-200">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

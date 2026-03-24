@@ -1,0 +1,45 @@
+# .NET Core
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+*.temp
+*.swp
+*.bak
+*.orig
+*.rej
+*.patch
+*.diff
+
+# Build outputs
+build_tmp/
+build_verify/
+build_verify_tmp/
+build_verify_tmp2/
+build_verify_tmp3/
+build_verify_tmp4/
+build_verify_tmp5/
+build_verify_tmp6/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.sln.user
+*.csproj.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+appsettings.Development.json
+appsettings.Production.json

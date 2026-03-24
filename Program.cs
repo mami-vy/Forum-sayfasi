@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc;
@@ -82,7 +82,13 @@ builder.Services.AddAuthorization(options =>
             .Replace("ü", "u")
             .Replace("ş", "s")
             .Replace("ö", "o")
-            .Replace("ç", "c");
+            .Replace("ç", "c")
+            .Replace("Ä±", "i")
+            .Replace("ÄŸ", "g")
+            .Replace("Ã¼", "u")
+            .Replace("ÅŸ", "s")
+            .Replace("Ã¶", "o")
+            .Replace("Ã§", "c");
     }
 
     // Full admin (role assignment etc.)
@@ -90,6 +96,13 @@ builder.Services.AddAuthorization(options =>
     {
         var roles = context.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => NormalizeRoleKey(c.Value));
         return roles.Any(r => r == "administrator" || r == "admin");
+    }));
+
+    // Role management (admin + super-moderator)
+    options.AddPolicy("ManageRoles", policy => policy.RequireAssertion(context =>
+    {
+        var roles = context.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => NormalizeRoleKey(c.Value));
+        return roles.Any(r => r == "administrator" || r == "admin" || r.Contains("super"));
     }));
 
     // Manage site settings (admin + super-moderator)
@@ -138,7 +151,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
-        var roleNames = new[] { "Administrator", "Moderator", "SuperModerator", "CaylakModerator", "Ziyaretci" };
+        var roleNames = new[] { "Administrator", "Moderator", "SuperModerator", "CaylakModerator", "Uye", "Ziyaretci" };
         foreach (var rn in roleNames)
         {
             if (!await roleManager.RoleExistsAsync(rn))
@@ -164,6 +177,12 @@ using (var scope = app.Services.CreateScope())
             { "Çaylak Moderatör", "CaylakModerator" },
             { "ÇaylakModerator", "CaylakModerator" },
             { "moderatör", "Moderator" },
+            { "Üye", "Uye" },
+            { "SuperModeratÃ¶r", "SuperModerator" },
+            { "SÃ¼per moderatÃ¶r", "SuperModerator" },
+            { "Ã‡aylak ModeratÃ¶r", "CaylakModerator" },
+            { "Ã‡aylakModerator", "CaylakModerator" },
+            { "moderatÃ¶r", "Moderator" },
             { "administrator", "Administrator" },
             { "Admin", "Administrator" }
         };
@@ -232,6 +251,7 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 app.Run();
+
 
 
 
